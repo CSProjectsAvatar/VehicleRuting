@@ -9,6 +9,66 @@ using OmarFirstTask;
 
 namespace ConsoleApp2
 {
+    class Ivns
+    {
+        static void Start(){
+            
+            IList<Client> list = Utils.ReadFile(args[0], out Client center, out int capacity);
+
+            DistributionNetwork net = new DistributionNetwork(list, 9, capacity, center);
+            //DistributionNetwork net = new DistributionNetwork(list, Utils.ReadRoutes("opt-A-n65-k9"), 9, capacity, center);
+
+            int i = 0;
+            int aux = 0;
+            Stopwatch crono = new Stopwatch();
+            DistributionNetwork bestNet = (DistributionNetwork)net.Clone();
+
+            crono.Start();
+
+            int numV = 0;
+            int max = 1;
+            int n = 2000000;
+            while (true)
+            {
+                numV++;
+                NbhGenerator generator = new NbhGenerator(new[] { typeof(InsertClient), typeof(SwapClients) }, numV);
+
+                foreach (var nbh in generator.GetNeighborhoods())
+                {
+                    Utils.PrintNbh(nbh);
+                    bestNet = nbh.GetBest(bestNet);// Era aki lo del cluster
+
+                    i += nbh.combinaciones_analizadas;
+                    aux += nbh.combinaciones_analizadas;
+                    if (aux / n > 0)
+                    {
+                        aux /= n;
+                        Utils.PrintNet(bestNet, bestNet.Center.Point);
+                        Console.WriteLine(bestNet.TotalDistance);
+                    }
+
+                    Console.WriteLine(i + " Combinaciones Analizadas en : " + crono.ElapsedMilliseconds);
+                }
+                if (numV == max)
+                {
+                    max++;
+                    numV = 0;
+                    Console.WriteLine("Comienzo Pequenno//////////////////////////////////////////////////////////////////////////////////////////");
+                }
+                net = bestNet;
+                Console.WriteLine();
+                Console.WriteLine(bestNet);
+                Console.WriteLine("Cost: " + bestNet.TotalDistance);
+                
+                long seg = crono.ElapsedMilliseconds / 1000;
+                long min = seg / 60;
+                long prom = i / (seg == 0 ? 1 : seg);
+                Console.WriteLine(i + " Combinaciones Analizadas en : " +  seg + "seg, " + min + "min, En PROMEDIO: " + prom + " comb analizadas por segundo");
+                Console.WriteLine("Agrando Vecindad----------------------------------------------------------------------------------");
+            }
+
+        }
+    }
     class Program
     {
         static void Main(string[] args)

@@ -57,7 +57,7 @@ namespace OmarFirstTask
         /// <param name="clients"></param>
         /// <param name="minVehicles"></param>
         /// <param name="capacity"></param>
-        public DistributionNetwork(IList<Client> clients, int minVehicles, int capacity, Client center)
+        public DistributionNetwork(IList<Client> clients, int capacity, Client center, int minVehicles = 7)
         {
             Center = center;
             distances = Utils.ComputeDistanceMatrix(clients);

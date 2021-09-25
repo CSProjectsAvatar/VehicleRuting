@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26228.4
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OmarFirstTask", "OmarFirstTask\OmarFirstTask.csproj", "{6D92F287-D3B6-4F53-8ED3-94DBFFDE0839}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp2", "ConsoleApp2\ConsoleApp2.csproj", "{7C75E117-5099-4E0E-BCFA-A00A2226C3FD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cli", "Cli\Cli.csproj", "{D485D5F9-349C-40A4-8CC7-EFECD341C424}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,8 +23,15 @@ Global
 		{7C75E117-5099-4E0E-BCFA-A00A2226C3FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7C75E117-5099-4E0E-BCFA-A00A2226C3FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7C75E117-5099-4E0E-BCFA-A00A2226C3FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D485D5F9-349C-40A4-8CC7-EFECD341C424}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D485D5F9-349C-40A4-8CC7-EFECD341C424}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D485D5F9-349C-40A4-8CC7-EFECD341C424}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D485D5F9-349C-40A4-8CC7-EFECD341C424}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EC5CE539-17D4-4E34-A744-6BB651A9B269}
 	EndGlobalSection
 EndGlobal

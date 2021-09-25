@@ -12,7 +12,7 @@ namespace TestingCApp
 {
     class Ivnp
     {
-        public Ivnp(long totalTimeInSeconds = 20, long divingTimeInSeconds = 10)
+        public Ivnp(long totalTimeInSeconds = 60, long divingTimeInSeconds = 30)
         {
             TimeTracker = new TimeTracker(totalTimeInSeconds, divingTimeInSeconds);
             SolsVisited = new List<Tuple<Neighborhood, DistributionNetwork>>();
@@ -29,13 +29,16 @@ namespace TestingCApp
         public List<Tuple<Neighborhood, DistributionNetwork>> SolsVisited { get; set; }
         public int AnalizedComb { get; set; }
         
+        public void LoadNet(){
+            IList<Client> list = Utils.ReadFile(FileName, out Client center, out int capacity);
+            InitialNet = new DistributionNetwork(list, capacity, center);
+
+        }
         //DistributionNetwork net = new DistributionNetwork(list, Utils.ReadRoutes("A-n64-k9"), 9, capacity, center);
         public void Run()
         {
-            IList<Client> list = Utils.ReadFile(FileName, out Client center, out int capacity);
-            DistributionNetwork currentNet = new DistributionNetwork(list, capacity, center);
-
-            InitialNet = (DistributionNetwork)currentNet.Clone();
+            LoadNet();
+            var currentNet = (DistributionNetwork)InitialNet.Clone();
 
             TimeTracker.RestartGlobalCrono();
             while (!TimeTracker.ExaustedTotalTime)
@@ -50,8 +53,20 @@ namespace TestingCApp
 
                 InitialSearchDeph++;
             }
+            BestNet = currentNet;
         }
+        public void Run(IList<Type> fcomands){
+            LoadNet();
+            var currentNet = (DistributionNetwork)InitialNet.Clone();
+            
+            var nbh = new Neighborhood(fcomands);
 
+            System.Console.Write("Analizing - ");
+            Utils.PrintNbh(nbh);
+
+            BestNet = Optimize(currentNet, nbh, TimeTracker);
+        }
+        
         // Dado una distribucion inicial de clientes, y un generador de vecindades devuelve la mejor distribucion encontrada en un tiempo menor a 'DivingTimeInSeconds'
         public DistributionNetwork Optimize(DistributionNetwork currentNet, NbhGenerator generator, TimeTracker tt)
         {
@@ -77,16 +92,29 @@ namespace TestingCApp
             }
             return currentNet;
         }
+ 
+        // Dado una distribucion inicial de clientes, y un generador de vecindades devuelve la mejor distribucion encontrada en un tiempo menor a 'DivingTimeInSeconds'
+        public DistributionNetwork Optimize(DistributionNetwork currentNet, Neighborhood nbh, TimeTracker tt)
+        {
+            tt.RestartDivingCrono();
+
+            currentNet = nbh.GetBest(currentNet, tt);
+
+            AnalizedComb += nbh.combinaciones_analizadas;
+            return currentNet;
+        }
+ 
+        
     }
     class Program
     {
         static void Main(string[] args)
         {
-            var runner = new Ivnp(10, 5);
+            var runner = new Ivnp();
 
             runner.FileName = "Problems/A-n64-k9.vrp";
 
-            runner.Run();
+            runner.RunOne();
 
             System.Console.WriteLine("Finished");
             Console.ReadLine();

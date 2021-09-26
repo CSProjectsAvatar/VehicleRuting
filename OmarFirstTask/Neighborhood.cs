@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -39,8 +40,7 @@ namespace OmarFirstTask
 
             return result;
         }
-
-
+  
         public IEnumerable<DistributionNetwork> GetNeighbors(DistributionNetwork center)
         {/* obtiene todas las redes q se pueden generar aplicando esta vecindad, centrada en <center> */
 
@@ -69,21 +69,19 @@ namespace OmarFirstTask
                 }
             }
         }
-        public DistributionNetwork GetBest(DistributionNetwork center)
+        public DistributionNetwork GetBest(DistributionNetwork best, TimeTracker tt)
         {
-            DistributionNetwork best = center;
-
             foreach (var neigh in GetNeighbors((DistributionNetwork)best.Clone()))
             {
                 combinaciones_analizadas++;
                 if (neigh.TotalDistance < best.TotalDistance)
                 {
-                    best = (DistributionNetwork)neigh.Clone();
-                    Console.WriteLine(best + "\n" + best.TotalDistance);
+                    best = (DistributionNetwork)neigh.Clone(); // needed the clone?
 
-                    //Utils.PrintNet(best, best.Center.Point);
-                    Console.WriteLine("Combinaciones analizadas en Vecindad: " + combinaciones_analizadas);
-                    Console.WriteLine("//////////////////////////////");
+                    System.Console.WriteLine(best.TotalDistance);
+
+                    if (tt.ExaustedDivingTime || tt.ExaustedTotalTime)
+                        break;
                 }
             }
             return best;

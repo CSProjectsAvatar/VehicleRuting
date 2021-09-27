@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OmarFirstTask;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -37,6 +38,23 @@ namespace Cli {
             var match = regex.Match(arg);
 
             return match.Success && match.Index == 0;
+        }
+
+        internal static long ToLong(this string str) {
+            if (long.TryParse(str, out var res)) {
+                return res;
+            }
+            throw new InvalidOptionOrValueException();
+        }
+
+        internal static IList<Type> ToFinalCommandTypes(this string finalCommandChars) {
+            return finalCommandChars
+                .Select(c => c switch {
+                    'c' => typeof(SwapClients),
+                    'b' => typeof(InsertClient),
+                    _ => throw new InvalidOptionOrValueException()
+                })
+                .ToList();
         }
     }
 }

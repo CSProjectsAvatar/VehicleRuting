@@ -1,8 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>net5.0</TargetFramework>
+	<OutputType>Exe</OutputType>
+	<TargetFramework>net5.0</TargetFramework>
+	<AssemblyName>ivns</AssemblyName>
   </PropertyGroup>
+
+  <ItemGroup>
+	<ProjectReference Include="..\TestingCApp\TestingCApp.csproj" />
+  </ItemGroup>
+
+    <ItemGroup>
+		<Content Include="Problems\*.*">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
 
 </Project>

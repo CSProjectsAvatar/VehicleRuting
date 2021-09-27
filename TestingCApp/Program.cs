@@ -10,7 +10,7 @@ using OmarFirstTask;
 
 namespace TestingCApp
 {
-    class Ivnp
+    public class Ivnp
     {
         public Ivnp(long totalTimeInSeconds = 60, long divingTimeInSeconds = 30)
         {
@@ -61,7 +61,7 @@ namespace TestingCApp
             
             var nbh = new Neighborhood(fcomands);
 
-            System.Console.Write("Analizing - ");
+            System.Console.Write("Analizando - ");
             Utils.PrintNbh(nbh);
 
             BestNet = Optimize(currentNet, nbh, TimeTracker);
@@ -77,7 +77,7 @@ namespace TestingCApp
                     break;
 
                 var prevBest = currentNet.TotalDistance;
-                System.Console.Write("Analizing - ");
+                System.Console.Write("Analizando - ");
                 Utils.PrintNbh(nbh);
 
                 currentNet = nbh.GetBest(currentNet, tt);
@@ -114,7 +114,7 @@ namespace TestingCApp
 
             runner.FileName = "Problems/A-n64-k9.vrp";
 
-            runner.RunOne();
+            runner.Run();
 
             System.Console.WriteLine("Finished");
             Console.ReadLine();

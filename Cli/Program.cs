@@ -9,7 +9,7 @@ namespace Cli {
     class Program {
         static void Main(string[] args) {
             var showHelp = args.Length==0 || args.ExistsOption('h');
-            var cliName = Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().Location);
+            var cliName = "ivns";
             var im = "\t";  // intermediate margin
 
             if (!showHelp) {
@@ -28,7 +28,7 @@ namespace Cli {
                     Console.WriteLine($"Configurado un máximo total de {totalTime} segundos.");
                     Console.WriteLine(
                         $"Configurado un máximo de {optTime} segundos de optimización por " +
-                        $"solución.");
+                        $"vecindad.");
 
                     var runner = new Ivnp(totalTime, optTime);
                     runner.FileName = args[0];
@@ -57,7 +57,7 @@ namespace Cli {
                     $"-t, --total-time{im} Máxima cantidad de segundos que debe consumir " +
                         "el algoritmo. Valor por defecto: 60.\n" +
                     $"-o, --optimization-time{im} Máxima cantidad de segundos que debe consumir " +
-                        "la optimización de una solución. Valor por defecto: 30.\n" +
+                        "la optimización de una solución en una vecindad dada. Valor por defecto: 30.\n" +
                     $"-n, --neighborhood{im} Analizar solamente la vecindad compuesta por los comandos " +
                         "finales dados. Estos son:\n" +
                         "\tc\t intercambiar clientes, y\n" +

@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Cli": {
+      "commandName": "Project",
+      "commandLineArgs": "Problems/A-n64-k9.vrp -t 5 -o 10"
+    }
+  }
+}

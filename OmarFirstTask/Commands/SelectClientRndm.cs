@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OmarFirstTask
 {
-    public class SelectClientRndm : RandomCommand
+    public class SelectClientRndm : Command
     {
         public static int caso = 0;
         public static int inicio = 0;
@@ -31,9 +31,9 @@ namespace OmarFirstTask
             if(rout.Clients.Count == 0)
                 yield break;// La ruta elegida no tiene clientes a escoger
 
-            for (int _ = 0; _ < Times; _++)//Cliente que voy a escoger
+            for (int _ = 0; _ < RandomCommand.Times; _++)//Cliente que voy a escoger
             {
-                var index = R.Next(0, rout.Clients.Count);
+                var index = RandomCommand.R.Next(0, rout.Clients.Count);
                 var client = rout.Clients[index];
 
                 rout.Remove(index, false);

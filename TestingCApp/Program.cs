@@ -114,7 +114,7 @@ namespace TestingCApp
 
             runner.FileName = "Problems/A-n64-k9.vrp";
             
-            var commands = new List<Type>(){typeof(InsertClient)};
+            var commands = new List<Type>(){typeof(InsertClientRndm)};
             runner.Run(commands);
 
             System.Console.WriteLine("Finished");

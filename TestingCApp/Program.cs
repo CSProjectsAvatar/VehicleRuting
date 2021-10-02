@@ -114,7 +114,7 @@ namespace TestingCApp
 
             runner.FileName = "Problems/A-n64-k9.vrp";
 
-            runner.RunOne();
+            runner.Run();
 
             System.Console.WriteLine("Finished");
             Console.ReadLine();

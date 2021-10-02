@@ -14,14 +14,14 @@ namespace OmarFirstTask
         private IdxSkipListNode<T> head;
         private Random rand;
 
-        public IndexableSkipList(ICollection<T> collection, double p)
+        public IndexableSkipList(ICollection<T> collection, double p = 0.3)
         {
             this.p = p;
             if (collection != null)
                 foreach (var item in collection)
-                    Add(item);
+                    Add(item); // Error aki llamando a maxLevel pq head es null
 
-            head = new IdxSkipListNode<T>();
+            head = new IdxSkipListNode<T>(); // Ver si se puede mover estas lineas para arriba
             head.Next.Add(null);
             head.Width.Add(0);
             this.Count = 0;

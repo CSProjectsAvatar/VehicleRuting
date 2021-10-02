@@ -7,14 +7,14 @@
 	<ApplicationIcon>van-bus.ico</ApplicationIcon>
   </PropertyGroup>
 
-  <ItemGroup>
-	<ProjectReference Include="..\TestingCApp\TestingCApp.csproj" />
-  </ItemGroup>
-
     <ItemGroup>
 		<Content Include="Problems\*.*">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 	</ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\OmarFirstTask\OmarFirstTask.csproj" />
+    </ItemGroup>
 
 </Project>

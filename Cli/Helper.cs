@@ -47,6 +47,20 @@ namespace Cli {
             throw new InvalidOptionOrValueException();
         }
 
+        internal static uint ToUint(this string str) {
+            if (uint.TryParse(str, out var res)) {
+                return res;
+            }
+            throw new InvalidOptionOrValueException();
+        }
+
+        internal static uint NotZero(this uint n) {
+            if (n != 0) {
+                return n;
+            }
+            throw new InvalidOptionOrValueException();
+        }
+
         internal static IList<Type> ToFinalCommandTypes(this string finalCommandChars) {
             return finalCommandChars
                 .Select(c => c switch {

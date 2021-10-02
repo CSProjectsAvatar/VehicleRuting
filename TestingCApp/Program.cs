@@ -110,11 +110,12 @@ namespace TestingCApp
     {
         static void Main(string[] args)
         {
-            var runner = new Ivnp();
+            var runner = new Ivnp(400, 300);
 
             runner.FileName = "Problems/A-n64-k9.vrp";
-
-            runner.Run();
+            
+            var commands = new List<Type>(){typeof(InsertClient)};
+            runner.Run(commands);
 
             System.Console.WriteLine("Finished");
             Console.ReadLine();

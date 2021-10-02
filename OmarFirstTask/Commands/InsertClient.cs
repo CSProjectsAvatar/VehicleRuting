@@ -6,7 +6,7 @@ namespace OmarFirstTask
 {
     public class InsertClient : FinalCommand
     {
-        public InsertClient() : base(new [] { typeof(SelectClient), typeof(SelectRoute) })
+        public InsertClient() : base(new [] { typeof(SelectClient), typeof(SelectRouteRndm) })
         {
         }
 

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace OmarFirstTask
 {
-    public class SelectRouteRndm : RandomCommand
+    public class SelectRouteRndm : Command
     {
         public SelectRouteRndm() : base(false)
         {
@@ -25,9 +25,9 @@ namespace OmarFirstTask
             var upperLimit = center.Vehicles.Count - quarter.routes.Count;// Si ya escogi alguna ruta el max es Count menos a elegir
             var routes = GetRoutesIndexes(center);
 
-            for (int i = 0; i < Times; i++)
+            for (int i = 0; i < RandomCommand.Times; i++)
             {
-                var res = R.Next(0, upperLimit);
+                var res = RandomCommand.R.Next(0, upperLimit);
                 var routeNumber = routes[res];
 
                 quarter.routes.Add(center.Vehicles[routeNumber].Route);

@@ -28,40 +28,22 @@ namespace OmarFirstTask
             }
 
             var rout = quarter.routes[quarter.routes.Count - 1];
+            if(rout.Clients.Count == 0)
+                yield break;// La ruta elegida no tiene clientes a escoger
 
-            int init = 0;
-            if (quarter.routes.Count == 1 && quarter.clients.Count == 1)//Estoy escogiendo 2 de la misma V
-                init = quarter.clients[0].Item2;// sin 1
-
-            for (int i = 0; i < Times; i++)//Cliente que voy a escoger
+            for (int _ = 0; _ < Times; _++)//Cliente que voy a escoger
             {
-                var res = R.Next(0, 34536);
-                var client = rout.Clients[i];
-                rout.Remove(i, false);
-                quarter.clients.Add(new Tuple<Client, int>(client, i));//Meto en la lista
+                var index = R.Next(0, rout.Clients.Count);
+                var client = rout.Clients[index];
+
+                rout.Remove(index, false);
+
+                quarter.clients.Add(new Tuple<Client, int>(client, index));//Meto en la lista de clientes elegidos
                 yield return center;
 
                 quarter.clients.RemoveAt(quarter.clients.Count - 1);//Lo saco
-                rout.Insert(i, client, false);//Lo vuelvo a meter
+                rout.Insert(index, client, false);//Lo vuelvo a meter en la ruta
             }
-
-
-
-            // var rout = quarter.routes[quarter.routes.Count - 1];
-            // int init = 0;
-            // if (quarter.routes.Count == 1 && quarter.clients.Count == 1)//Estoy escogiendo 2 de la misma V
-            //     init = quarter.clients[0].Item2;// sin 1
-
-            // for (int i = init; i < rout.Clients.Count; i++)//Cliente que voy a escoger
-            // {
-            //     var client = rout.Clients[i];
-            //     rout.Remove(i, false);
-            //     quarter.clients.Add(new Tuple<Client, int>(client, i));//Meto en la lista
-            //     yield return center;
-
-            //     quarter.clients.RemoveAt(quarter.clients.Count - 1);//Lo saco
-            //     rout.Insert(i, client, false);//Lo vuelvo a meter
-            // }
         }
     }
 }

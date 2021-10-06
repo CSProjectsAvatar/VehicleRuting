@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace OmarFirstTask.Commands {
-    class SelectRandomSubroute : Command {
-        public SelectRandomSubroute() : base(new[] { typeof(SelectRouteRndm) }, false) {
+    class SelectSubrouteRndm : Command {
+        public SelectSubrouteRndm() : base(new[] { typeof(SelectRouteRndm) }, false) {
 
         }
 
@@ -22,16 +22,15 @@ namespace OmarFirstTask.Commands {
 
                 quarter.subroutes.Add(new List<Client>());
 
-                for (int c = startIdx + size - 1; c >= startIdx; c--) {  // using reverse loop to remove
+                for (int c = startIdx, cant = 0; cant < size; cant++) {
                     quarter.subroutes[^1].Add(route.Clients[c]);
                     route.Remove(c, false);
                 }
 
                 yield return center;
 
-                for (int c = startIdx; c - startIdx < size; c++) {
-                    route.Insert(c, quarter.subroutes[^1][^1], false);
-                    quarter.subroutes[^1].RemoveLast();
+                for (int c = startIdx, subIdx = 0; subIdx < size; c++, subIdx++) {
+                    route.Insert(c, quarter.subroutes[^1][subIdx], false);
                 }
 
                 quarter.subroutes.RemoveLast();

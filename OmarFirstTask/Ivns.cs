@@ -37,7 +37,7 @@ namespace OmarFirstTask {
             while (!TimeTracker.ExaustedTotalTime)
             {
                 NbhGenerator generator = new NbhGenerator(
-                    new[] { typeof(InsertSubrouteRandmonly), typeof(InsertClient), typeof(SwapClients),  }, 
+                    new[] { typeof(InsertSubrouteRndm), typeof(InsertClient), typeof(SwapClients),  }, 
                     InitialSearchDeph);
                 
                 var solsVCount = SolsVisited.Count;

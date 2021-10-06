@@ -3,7 +3,7 @@ using OmarFirstTask;
 
 namespace Tests {
     [TestClass]
-    public class InsertSubrouteRandmonly {
+    public class InsertSubrouteRndm {
         private DistributionNetwork _net;
         private NbhGenerator _nbhGen;
         private Ivns _runner;
@@ -27,7 +27,7 @@ namespace Tests {
                 35,
                 center
             );
-            _nbhGen = new NbhGenerator(new[] { typeof(InsertClient), typeof(SwapClients), typeof(OmarFirstTask.Commands.InsertSubrouteRandmonly) }, 1);
+            _nbhGen = new NbhGenerator(new[] { typeof(InsertClient), typeof(SwapClients), typeof(OmarFirstTask.Commands.InsertSubrouteRndm) }, 1);
             _runner = new Ivns(3000, 3000);
         }
 

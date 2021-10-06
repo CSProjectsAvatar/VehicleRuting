@@ -115,13 +115,13 @@ namespace OmarFirstTask
             else if (cmd is SwapClients)
                 c = 'c';
 
-            else if (cmd is SelectRandomSubroute)
+            else if (cmd is SelectSubrouteRndm)
                 c = 's';
 
             else if (cmd is InsertClient)
                 c = 'b';
 
-            else if (cmd is InsertSubrouteRandmonly) {
+            else if (cmd is InsertSubrouteRndm) {
                 c = 'u';
 
             } else if (cmd is SelectClientRndm) {

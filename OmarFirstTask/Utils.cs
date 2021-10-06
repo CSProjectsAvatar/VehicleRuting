@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OmarFirstTask.Commands;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -114,14 +115,24 @@ namespace OmarFirstTask
             else if (cmd is SwapClients)
                 c = 'c';
 
-            else if (cmd is SelectSubroute)
+            else if (cmd is SelectRandomSubroute)
                 c = 's';
 
             else if (cmd is InsertClient)
                 c = 'b';
 
-            else if (cmd is SwapSubroutes)
+            else if (cmd is InsertSubrouteRandmonly) {
+                c = 'u';
+
+            } else if (cmd is SelectClientRndm) {
+                c = 'e';
+
+            } else if (cmd is SelectRouteRndm) {
                 c = 't';
+
+            } else {
+                throw new NotImplementedException();
+            }
 
             return c;
         }

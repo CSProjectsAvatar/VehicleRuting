@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OmarFirstTask.Commands;
+using System;
 using System.Collections.Generic;
 
 namespace OmarFirstTask {
@@ -35,7 +36,9 @@ namespace OmarFirstTask {
             TimeTracker.RestartGlobalCrono();
             while (!TimeTracker.ExaustedTotalTime)
             {
-                NbhGenerator generator = new NbhGenerator(new[] { typeof(InsertClient), typeof(SwapClients) }, InitialSearchDeph);
+                NbhGenerator generator = new NbhGenerator(
+                    new[] { typeof(InsertSubrouteRandmonly), typeof(InsertClient), typeof(SwapClients),  }, 
+                    InitialSearchDeph);
                 
                 var solsVCount = SolsVisited.Count;
                 currentNet = Optimize(currentNet, generator, TimeTracker);

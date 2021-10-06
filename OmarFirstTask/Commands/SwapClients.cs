@@ -31,6 +31,7 @@ namespace OmarFirstTask
 
             if (!Swap(tupleC1, tupleC2))
                 yield break;
+
             yield return center;
 
             Deswap(tupleC1, tupleC2);

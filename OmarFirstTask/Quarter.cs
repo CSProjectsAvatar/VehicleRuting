@@ -17,6 +17,7 @@ namespace OmarFirstTask
          modificadas por los comandos q se ejecuten en este barrio. */
         internal List<Route> routes;
         internal List<Tuple<Client, int>> clients;
+        internal IList<IList<Client>> subroutes;
 
         public Quarter(FinalCommand finalCommand, bool compressed)
         {
@@ -27,6 +28,7 @@ namespace OmarFirstTask
             }
             this.routes = new List<Route>();
             this.clients = new List<Tuple<Client, int>>();
+            this.subroutes = new List<IList<Client>>();
         }
         public Quarter(FinalCommand finalCommand) : this(finalCommand, false) { }
         public IEnumerable<DistributionNetwork> GetNeighbors(DistributionNetwork center)

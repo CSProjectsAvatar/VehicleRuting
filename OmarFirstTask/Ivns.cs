@@ -21,7 +21,12 @@ namespace OmarFirstTask {
         public int SolVisitedPerCicle { get; set; } = 2000000;
         public List<Tuple<Neighborhood, DistributionNetwork>> SolsVisited { get; set; }
         public int AnalizedComb { get; set; }
-        
+
+        /// <summary>
+        /// Logueador de líneas: debe loguear el string dado y poner un fin de línea.
+        /// </summary>
+        public Action<string> LogLine { get; set; } = line => Console.WriteLine(line);
+
         public void LoadNet(){
             IList<Client> list = Utils.ReadFile(FileName, out Client center, out int capacity);
             InitialNet = new DistributionNetwork(list, capacity, center);
@@ -69,11 +74,11 @@ namespace OmarFirstTask {
             var sols = new double[times];
 
             for (int i = 0; i < times; i++) {
-                Console.WriteLine($"Corrida #{i + 1}:\n");
+                LogLine($"Corrida #{i + 1}:\n");
 
                 runAction();
 
-                Console.WriteLine();
+                LogLine("");
 
                 var sol = BestNet.TotalDistance;
                 minSol = Math.Min(minSol, sol);
@@ -100,8 +105,7 @@ namespace OmarFirstTask {
             
             var nbh = new Neighborhood(fcomands);
 
-            System.Console.Write("Analizando - ");
-            Utils.PrintNbh(nbh);
+            LogLine($"Analizando - {Utils.GetNbhStr(nbh)}");
 
             BestNet = Optimize(currentNet, nbh, TimeTracker);
         }
@@ -116,8 +120,7 @@ namespace OmarFirstTask {
                     break;
 
                 var prevBest = currentNet.TotalDistance;
-                System.Console.Write("Analizando - ");
-                Utils.PrintNbh(nbh);
+                LogLine($"Analizando - {Utils.GetNbhStr(nbh)}");
 
                 currentNet = nbh.GetBest(currentNet, tt);
                 var actualBest = currentNet.TotalDistance;
@@ -127,7 +130,7 @@ namespace OmarFirstTask {
 
                 AnalizedComb += nbh.combinaciones_analizadas;
 
-                System.Console.WriteLine(actualBest);
+                LogLine(actualBest.ToString());
             }
             return currentNet;
         }

@@ -82,23 +82,25 @@ namespace OmarFirstTask
             }
         }
 
-        public static void PrintNbh(Neighborhood nbh)
+        public static string GetNbhStr(Neighborhood nbh)
         {
+            var res = "";
             foreach (var nbhQuarter in nbh.Quarters)
             {
-                PrintQuarter(nbhQuarter);
+                res += GetQuarterStr(nbhQuarter);
             }
-            Console.WriteLine();
+            return res;
         }
 
-        private static void PrintQuarter(Quarter quarter)
+        private static string GetQuarterStr(Quarter quarter)
         {
+            var res = "";
             foreach (var cmd in quarter.Commands)
             {
                 char c = GetCmdChar(cmd);
-
-                Console.Write(c);
+                res += c;
             }
+            return res;
         }
 
         private static char GetCmdChar(Command cmd)

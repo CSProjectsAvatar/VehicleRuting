@@ -78,8 +78,10 @@ namespace Cli {
                         "la optimización de una solución en una vecindad dada. Valor por defecto: 30.\n" +
                     $"-n, --neighborhood{im} Analizar solamente la vecindad compuesta por los comandos " +
                         "finales dados. Estos son:\n" +
-                        "\tc\t intercambiar clientes, y\n" +
-                        "\tb\t insertar cliente.\n\n" +
+                        "\tc\t intercambiar clientes,\n" +
+                        "\tb\t insertar cliente,\n\n" +
+                        "\tm\t insertar cliente random,\n" +
+                        "\tp\t insertar subruta random.\n\n" +
                         "\tEjemplo de uso:\n" +
                         $"\t{cliName} A-n64-k9.vrp -n ccb\n" +
                     $"-x, --x-times{im}\t Número de veces a ejecutar el algoritmo. Valor por defecto: 1."

@@ -1,4 +1,5 @@
 ﻿using OmarFirstTask;
+using OmarFirstTask.Commands;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -66,6 +67,8 @@ namespace Cli {
                 .Select(c => c switch {
                     'c' => typeof(SwapClients),
                     'b' => typeof(InsertClient),
+                    'm' => typeof(InsertClientRndm),
+                    'p' => typeof(InsertSubrouteRndm),
                     _ => throw new InvalidOptionOrValueException()
                 })
                 .ToList();

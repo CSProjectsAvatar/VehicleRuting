@@ -9,8 +9,8 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/TestingCApp/bin/Debug/net5.0/TestingCApp.dll",
-            "args": [],
+            "program": "${workspaceFolder}/Cli/bin/Debug/net5.0/ivns.dll",
+            "args": ["Problems/A-n64-k9.vrp", "-t", "20", "-o", "10", "-n", "p"],
             "cwd": "${workspaceFolder}",
             "stopAtEntry": false,
             "serverReadyAction": {

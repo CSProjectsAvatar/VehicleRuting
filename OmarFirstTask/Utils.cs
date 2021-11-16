@@ -132,6 +132,8 @@ namespace OmarFirstTask
             } else if (cmd is SelectRouteRndm) {
                 c = 't';
 
+            } else if (cmd is InsertClientRndm) {
+                c = 'm';
             } else {
                 throw new NotImplementedException();
             }

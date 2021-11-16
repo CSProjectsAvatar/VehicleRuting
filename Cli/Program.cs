@@ -81,7 +81,7 @@ namespace Cli {
                         "\tc\t intercambiar clientes,\n" +
                         "\tb\t insertar cliente,\n\n" +
                         "\tm\t insertar cliente random,\n" +
-                        "\tp\t insertar subruta random.\n\n" +
+                        "\tu\t insertar subruta random.\n\n" +
                         "\tEjemplo de uso:\n" +
                         $"\t{cliName} A-n64-k9.vrp -n ccb\n" +
                     $"-x, --x-times{im}\t Número de veces a ejecutar el algoritmo. Valor por defecto: 1."

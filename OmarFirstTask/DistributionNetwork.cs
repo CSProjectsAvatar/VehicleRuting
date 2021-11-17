@@ -70,15 +70,17 @@ namespace OmarFirstTask
             Vehicle vehc = new Vehicle(rout, capacity);
             vehc.myNet = this;
 
-            for (int i = 0; i < clients.Count; i++)
+            clients.RemoveAt(0);
+            var r = new Random(Environment.TickCount);
+            while (clients.Count != 0)
             {
-                if (i == Center.ID - 1)//Si es el centro no lo meto
-                    continue;
+                var i = r.Next(clients.Count);
                 var client = clients[i];
 
                 if (vehc.Route.Accept(client) && vehc.Route.Clients.Count <= cantxRout)
                 {// el tipo va en esta ruta
                     vehc.Route.Insert(client);
+                    clients.RemoveAt(i);
                 }
                 else
                 {
@@ -86,12 +88,11 @@ namespace OmarFirstTask
                     rout = new Route(id++);
                     vehc = new Vehicle(rout, capacity);
                     vehc.myNet = this;
-
-                    i--;// ANALIZAR CASO EN Q UN VEHÍCULO NO PUEDA CARGAR CON EL PEDIDO DE UN CLIENTE
                 }
             }
             AddVehicle(vehc);
         }
+
 
         /// <summary>
         /// Tiene en cuenta una ruta ya preextablecida como punto de partida

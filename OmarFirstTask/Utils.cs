@@ -211,7 +211,7 @@ namespace OmarFirstTask
             {
                 index++;
 
-                var actL = lines[index].Split();
+                var actL = RemoveSpaces(lines[index]);
                 if (actL[0] == "DEPOT_SECTION")//Paro cuando vea esto
                 {
                     index++;
@@ -226,6 +226,11 @@ namespace OmarFirstTask
             return clients;
         }
 
+        private static string[] RemoveSpaces(string line)
+        {
+            var sol = from item in line.Split() where item != "" select item;
+            return sol.ToArray();
+        }
 
         public static List<List<int>> ReadRoutes(string fileName)
         {

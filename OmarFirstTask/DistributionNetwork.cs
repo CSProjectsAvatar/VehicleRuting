@@ -101,7 +101,7 @@ namespace OmarFirstTask
         /// <param name="routIndexClients"></param>
         /// <param name="minVehicles"></param>
         /// <param name="capacity"></param>
-        public DistributionNetwork(IList<Client> clients, List<List<int>> routIndexClients, int minVehicles, int capacity, Client center)
+        public DistributionNetwork(IList<Client> clients, List<List<int>> routIndexClients, int capacity, Client center)
         {
             Center = center;
             distances = Utils.ComputeDistanceMatrix(clients);
@@ -151,6 +151,7 @@ namespace OmarFirstTask
         {
             return Vehicles.GetEnumerator();
         }
+
         public override string ToString()
         {
             string s = "";
@@ -195,6 +196,21 @@ namespace OmarFirstTask
             return new DistributionNetwork(Vehicles, distances, TotalDistance, Center);
         }
 
-
+        /// <summary>
+        /// Elimina rutas vacias
+        /// </summary>
+        /// <param name="number">numero de rutas vacias que deja</param>
+        public void LeaveEmptyVehicles(int number = 0){
+            var acc = 0;
+            for (int i = 0; i < Vehicles.Count; i++)
+            {
+                if(Vehicles[i].Route.Clients.Count == 0){
+                    acc++;
+                    if(acc > number){
+                        Vehicles.RemoveAt(i);
+                    }
+                }
+            }
+        }
     }
 }

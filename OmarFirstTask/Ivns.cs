@@ -1,6 +1,7 @@
 ﻿using OmarFirstTask.Commands;
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace OmarFirstTask {
     public class Ivns
@@ -22,6 +23,7 @@ namespace OmarFirstTask {
         public List<Tuple<Neighborhood, DistributionNetwork>> SolsVisited { get; set; }
         public int AnalizedComb { get; set; }
 
+
         /// <summary>
         /// Logueador de líneas: debe loguear el string dado y poner un fin de línea.
         /// </summary>
@@ -31,12 +33,28 @@ namespace OmarFirstTask {
             IList<Client> list = Utils.ReadFile(FileName, out Client center, out int capacity);
             InitialNet = new DistributionNetwork(list, capacity, center);
             InitialSearchDeph = 0;
+        }
+        // Se asume que la ruta es /Problems/Solved/Nombre_Del_Problema/
+        public void LoadNetFromRoute(){
+            IList<Client> clients = Utils.ReadFile(FileName, out Client center, out int capacity);
+            
+            var r = new Regex(@"Problems/([^\.]*)\.vrp");
+            var problemName = r.Match(FileName).Groups[1].Value;
+                
+            string fileName = $"Problems/Solved/{problemName}/sol-{problemName}.txt";
+            var routes = Utils.ReadRoutes(fileName);
 
+            InitialNet = new DistributionNetwork(clients, routes, capacity, center);
+            InitialSearchDeph = 0;
         }
         //DistributionNetwork net = new DistributionNetwork(list, Utils.ReadRoutes("A-n64-k9"), 9, capacity, center);
-        public void Run()
+        public void Run(bool continueFromFile = false)
         {
-            LoadNet();
+            if(continueFromFile) {
+                LoadNetFromRoute();
+            } else {
+                LoadNet();
+            }
             var currentNet = (DistributionNetwork)InitialNet.Clone();
 
             TimeTracker.RestartGlobalCrono();
@@ -55,7 +73,7 @@ namespace OmarFirstTask {
                 InitialSearchDeph++;
             }
             BestNet = currentNet;
-            
+            LogBestNet();
         }
 
         public RunOutcome Run(IList<Type> initNbh, uint times) {
@@ -133,7 +151,7 @@ namespace OmarFirstTask {
 
                 AnalizedComb += nbh.combinaciones_analizadas;
 
-                LogLine(actualBest.ToString());
+                // LogLine(actualBest.ToString());
             }
             return currentNet;
         }

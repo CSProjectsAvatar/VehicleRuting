@@ -84,6 +84,7 @@ namespace OmarFirstTask
                 if (tt.ExaustedDivingTime || tt.ExaustedTotalTime)
                     break;
             }
+            best.LeaveEmptyVehicles(1);
             return best;
         }
     }

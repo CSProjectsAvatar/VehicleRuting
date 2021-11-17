@@ -10,7 +10,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             "program": "${workspaceFolder}/Cli/bin/Debug/net5.0/ivns.dll",
-            "args": ["Problems/A-n33-k5.vrp", "-t", "100", "-o", "40", "-x", "3"],
+            "args": ["Problems/A-n33-k5.vrp", "-t", "10", "-o", "10", "-x", "3"],
             "cwd": "${workspaceFolder}",
             "stopAtEntry": false,
             "serverReadyAction": {

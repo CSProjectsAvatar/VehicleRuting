@@ -172,7 +172,7 @@ namespace OmarFirstTask
                 matrix[i, i] = 0;
                 for (int k = i + 1; k < matrix.GetLength(1); k++)
                 {
-                    matrix[i, k] = (int)Point.EuclideanDistance(clients[i - 1].Point, clients[k - 1].Point);
+                    matrix[i, k] = Point.EuclideanDistance(clients[i - 1].Point, clients[k - 1].Point);
                     matrix[k, i] = matrix[i, k];
                 }
             }

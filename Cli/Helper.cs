@@ -68,7 +68,7 @@ namespace Cli {
                     'c' => typeof(SwapClients),
                     'b' => typeof(InsertClient),
                     'm' => typeof(InsertClientRndm),
-                    'p' => typeof(InsertSubrouteRndm),
+                    'u' => typeof(InsertSubrouteRndm),
                     _ => throw new InvalidOptionOrValueException()
                 })
                 .ToList();

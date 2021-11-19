@@ -42,6 +42,10 @@ namespace Cli {
 
                     var runOut = new RunOutcome();
 
+                    Console.CancelKeyPress += delegate {
+                        PrintOutcome(times, runOut, runner);
+                    };
+
                     if (initNbh != default) {
                         Console.WriteLine($"Analizando solamente la vecindad de comandos finales: {initNbhStr}.\n");
                         Console.WriteLine("Comienzo del algoritmo...\n");
@@ -51,16 +55,7 @@ namespace Cli {
                         runOut = runner.Run(times);
                     }
 
-                    if (times > 1) {
-                        Console.Write(
-                            $"Resultados de las {times} corridas:\n" +
-                            $"> Solución mínima: {runOut.MinSolution}\n" +
-                            $"> Solución máxima: {runOut.MaxSolution}\n" +
-                            $"> Solución promedio: {runOut.MeanSolution}\n" +
-                            $"> Soluciones: {string.Join(", ", runOut.Solutions)}\n");
-                    }
-
-                    Console.WriteLine("\nHecho :)");
+                    PrintOutcome(times, runOut, runner);
 
                 } catch (InvalidOptionOrValueException) {
                     showHelp = true;
@@ -98,6 +93,21 @@ namespace Cli {
             //    Console.WriteLine(args.ValueOfOption(opt));
             //    Console.WriteLine(args.ExistsOption(opt));
             //}
+        }
+
+        private static void PrintOutcome(uint times, RunOutcome runOut, Ivns runner) {
+            if (times > 1) {
+                Console.Write(
+                    $"Resultados de las {times} corridas:\n" +
+                    $"> Solución mínima: {runOut.MinSolution}\n" +
+                    $"> Solución máxima: {runOut.MaxSolution}\n" +
+                    $"> Solución promedio: {runOut.MeanSolution}\n" +
+                    $"> Soluciones: {string.Join(", ", runOut.Solutions)}\n");
+            }
+            Console.WriteLine();
+            runner.LogBestNet();
+
+            Console.WriteLine("\nHecho :)");
         }
 
         private static string StructureInfo(string @struct) {

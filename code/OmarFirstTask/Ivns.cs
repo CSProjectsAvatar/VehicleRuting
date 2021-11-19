@@ -134,7 +134,11 @@ namespace OmarFirstTask {
             }
             return currentNet;
         }
- 
+
+        public void LogBestNet() {
+            LogLine("Esta es la mejor sol.");
+        }
+
         // Dado una distribucion inicial de clientes, y un generador de vecindades devuelve la mejor distribucion encontrada en un tiempo menor a 'DivingTimeInSeconds'
         public DistributionNetwork Optimize(DistributionNetwork currentNet, Neighborhood nbh, TimeTracker tt)
         {

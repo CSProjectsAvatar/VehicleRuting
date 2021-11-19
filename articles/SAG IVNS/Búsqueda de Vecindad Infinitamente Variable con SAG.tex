@@ -388,11 +388,12 @@ Lic. Camila Pérez Mosquera, \emph{Universidad de la Habana. Facultad de Matemá
 	Esta estrategia consiste en explorar todos los vecinos de la vecindad y devolver el 
 	mejor de todos, para ello, se analizan todos los vecinos de una solución inicial con
 	respecto a un criterio $V$, y se devuelve el mejor. Luego se obtiene otro criterio 
-	de vecindad añadiendo a $V$ un CVS aleatorio, como se explicó anteriormente, y se 
+	de vecindad añadiendo a $V$ un CVS aleatorio, % @audit el criterio no es aleatorio
+	como se explicó anteriormente, y se 
 	repite el proceso. El algoritmo se detiene cuando, después de $ N $ iteraciones, no
 	encuentra una solución mejor.
 
-	\begin{algorithm}[htb]\label{algor:IVNS}
+	\begin{algorithm}[htb]\label{algor:IVNS} % @audit habla con Omar xq el algoritmo ta mal
 		\caption{Snake IVNS}
 	
 		\SetAlgoLined
@@ -407,7 +408,7 @@ Lic. Camila Pérez Mosquera, \emph{Universidad de la Habana. Facultad de Matemá
 		$ k \la 1 $\;
 		$ V \la \langle \rangle $\;
 		\While{$ k \leq N $}{
-			$v \la $ CVS aleatorio\;
+			$v \la $ CVS aleatorio\; % @audit no es aleatorio
 			$V \gets V + v$\;
 			$x \la $ mejor de todos los vecinos de $best$ en $ V $\;
 			
@@ -449,6 +450,7 @@ Lic. Camila Pérez Mosquera, \emph{Universidad de la Habana. Facultad de Matemá
 	de clientes del problema ($n = 33\;$ para A-n33-k5, \\
 	$n = 34\;$ para A-n34-k5, $n = 36\;$ para A-n36-k5, etc).
 	
+	% @todo actualizar to estos resultados
 	% ----------------------- 33 5 ---------------------------------
 	\begin{figure}[htbp]
 		\centering

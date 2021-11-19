@@ -73,5 +73,21 @@ namespace OmarFirstTask
         internal static void RemoveLast<T>(this IList<T> list) {
             list.RemoveAt(list.Count - 1);
         }
+
+        internal static void Shuffle<T>(this IList<T> list) {
+            var list_aux = new List<T>();
+            var r = new Random();
+
+            for (int i = list.Count - 1; i >= 0 ; i--)
+            {
+                var idx = r.Next(list.Count);
+                list_aux.Add(list[idx]);
+                list.RemoveAt(idx);
+            }
+            list = list_aux;
+        }
+   
+
+
     }
 }

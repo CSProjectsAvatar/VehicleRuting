@@ -80,10 +80,11 @@ namespace OmarFirstTask
 
                     System.Console.WriteLine(best.TotalDistance);
 
-                    if (tt.ExaustedDivingTime || tt.ExaustedTotalTime)
-                        break;
                 }
+                if (tt.ExaustedDivingTime || tt.ExaustedTotalTime)
+                    break;
             }
+            best.LeaveEmptyVehicles(1);
             return best;
         }
     }

@@ -172,7 +172,7 @@ namespace OmarFirstTask
                 matrix[i, i] = 0;
                 for (int k = i + 1; k < matrix.GetLength(1); k++)
                 {
-                    matrix[i, k] = (int)Point.EuclideanDistance(clients[i - 1].Point, clients[k - 1].Point);
+                    matrix[i, k] = Point.EuclideanDistance(clients[i - 1].Point, clients[k - 1].Point);
                     matrix[k, i] = matrix[i, k];
                 }
             }
@@ -211,7 +211,7 @@ namespace OmarFirstTask
             {
                 index++;
 
-                var actL = lines[index].Split();
+                var actL = RemoveSpaces(lines[index]);
                 if (actL[0] == "DEPOT_SECTION")//Paro cuando vea esto
                 {
                     index++;
@@ -226,6 +226,11 @@ namespace OmarFirstTask
             return clients;
         }
 
+        private static string[] RemoveSpaces(string line)
+        {
+            var sol = from item in line.Split() where item != "" select item;
+            return sol.ToArray();
+        }
 
         public static List<List<int>> ReadRoutes(string fileName)
         {

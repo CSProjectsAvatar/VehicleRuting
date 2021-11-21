@@ -193,15 +193,15 @@ namespace OmarFirstTask
             int index = 7;
             while (index < lines.Length)//Empiezan en la linea 8
             {
-                var actL = lines[index].Split();
+                var actL = RemoveSpaces(lines[index]);
                 if (actL[0] == "DEMAND_SECTION")//Paro cuando vea esto
                     break;
-                int i = 0;
-                if (actL[0] == "")
-                    i = 1;
 
-                clients.Add(new Client(int.Parse(actL[0 + i]),
-                            new Point(double.Parse(actL[1 + i]), double.Parse(actL[2 + i])), 0));
+                clients.Add(
+                    new Client(
+                        int.Parse(actL[0]),
+                        new Point(double.Parse(actL[1]), double.Parse(actL[2])), 
+                        0));
                 index++;
             }
 

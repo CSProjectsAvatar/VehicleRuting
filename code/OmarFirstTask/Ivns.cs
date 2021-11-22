@@ -20,7 +20,7 @@ namespace OmarFirstTask {
         public DistributionNetwork BestNet { get; set; }
         public int InitialSearchDeph { get; set; } = 1; // numV antes
         public int SolVisitedPerCicle { get; set; } = 2000000;
-        public List<Tuple<Neighborhood, DistributionNetwork>> SolsVisited { get; set; }
+        public List<Tuple<Neighborhood, DistributionNetwork>> SolsVisited { get; set; } // @todo esto ta fula xq consume mucha RAM x gusto
         public int AnalizedComb { get; set; }
 
 
@@ -62,7 +62,7 @@ namespace OmarFirstTask {
             {
                 NbhGenerator generator = new NbhGenerator(
                     new[] { typeof(InsertSubrouteRndm), typeof(InsertClient), typeof(SwapClients),  }, 
-                    InitialSearchDeph);
+                    InitialSearchDeph); // @todo agregar InsertClientRndm
                 
                 var solsVCount = SolsVisited.Count;
                 currentNet = Optimize(currentNet, generator, TimeTracker);

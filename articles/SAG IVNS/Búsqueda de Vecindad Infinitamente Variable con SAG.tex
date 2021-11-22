@@ -20,6 +20,8 @@
 \usepackage{pstricks} % permite añadir colores al texto
 \usepackage{float}
 \usepackage{epstopdf}
+\usepackage{caption}
+\usepackage{subcaption}
 \restylefloat{table}
 \restylefloat{figure}
 %-----------------------------------------------------------------------------------
@@ -60,17 +62,17 @@
 %-----------------------------------------------------------------------------------
 \author{\\
 \name Omar Alejandro Hernández Ramírez \email \href{mailto:omar.hernandez@estudiantes.matcom.uh.cu}{omar.hernandez@estudiantes.matcom.uh.cu}
-	\\ \addr Grupo C212 \AND
+	\\ \addr Grupo C312 \AND
 \name Andy Ledesma García \email \href{mailto:andy.ledesma@estudiantes.matcom.uh.cu}
 {andy.ledesma@estudiantes.matcom.uh.cu}
-  \\ \addr Grupo C211}
+  \\ \addr Grupo C311}
 
 %-----------------------------------------------------------------------------------
 % Tutores
 %-----------------------------------------------------------------------------------
 \tutors{\\
-Msc. Fernando Raúl Rodriguez Flores, \emph{Universidad de la Habana. Facultad de Matemática y Computación} \\
-Lic. Camila Pérez Mosquera, \emph{Universidad de la Habana. Facultad de Matemática y Computación}}
+Lic. Camila Pérez Mosquera, \emph{Universidad de la Habana. Facultad de Matemática y Computación} \\
+Msc. Fernando Raúl Rodriguez Flores, \emph{Universidad de la Habana. Facultad de Matemática y Computación}}
 
 %-----------------------------------------------------------------------------------
 % Headings
@@ -109,8 +111,8 @@ Lic. Camila Pérez Mosquera, \emph{Universidad de la Habana. Facultad de Matemá
   En este trabajo, se presenta una variante de la metaheurística Búsqueda de Vecindad
   Variable, para solucionar el Problema de Enrutamiento de Vehículos con Restricción 
   de Capacidad. Esta variante permite considerar infinitos criterios de vecindad y no 
-  una cantidad finita, como se trata usualmente. Los resultados obtenidos muestran el
-  buen desempeño del algoritmo.\\
+  una cantidad finita, como se trata usualmente. Los criterios son creados mediante un enfoque distinto a todo lo reportado en la bibliograf\'ia consultada. Los resultados obtenidos muestran el
+  buen desempeño del algoritmo.
 
 \end{abstract}
 
@@ -123,8 +125,8 @@ Lic. Camila Pérez Mosquera, \emph{Universidad de la Habana. Facultad de Matemá
 
   In this paper, a variant of the Variable Neighborhood Search algorithm for solving
   the Vehicle Routing Problem is presented. This variant allows to consider infinite
-  neighborhood criteria and not a finite number, as is usually in the literature. The results
-  obtained show the good performance of the algorithm.\\
+  neighborhood criteria and not a finite number, as is usually in the literature. Such criteria are created using an approach different from everything reported in the consulted bibliography. The results
+  obtained show the good performance of the algorithm.
 
 \end{enabstract}
 
@@ -284,10 +286,10 @@ Lic. Camila Pérez Mosquera, \emph{Universidad de la Habana. Facultad de Matemá
 	otra operación que pertenezca al criterio no depende de ella para ejecutarse. Las
 	operaciones finales utilizadas en este trabajo son:
 	
-	\begin{itemize}
+	\begin{itemize} % @todo actualizar las operaciones aleatorias q anyadimos
 		\item Insertar cliente en una ruta (\textbf{b}).
 		\item Intercambiar clientes de dos rutas (\textbf{c}).
-		\item Insertar subruta en una ruta (\textbf{i}).
+		\item Insertar subruta en una ruta (\textbf{i}). % @audit esta letra ta mal. Revisa las dema's tambie'n
 	\end{itemize}
 
 	Las operaciones \textbf{no finales} son indispensables en la realización de otra
@@ -339,7 +341,7 @@ Lic. Camila Pérez Mosquera, \emph{Universidad de la Habana. Facultad de Matemá
 	De esta manera, un criterio de vecindad es una sucesión, finita o no, de criterios 
 	de vecindad simple.
 
-	Hasta aquí se han definido cómo se formarán los criterios de vecindad y que
+	Hasta aquí se han definido cómo se formarán los criterios de vecindad y qu\'e
 	características deben cumplir para considerarse válidos. A continuación se brindan 
 	detalles sobre la implementación del algoritmo IVNS.
 %-----------------------------------------------------------------------------------
@@ -353,7 +355,7 @@ Lic. Camila Pérez Mosquera, \emph{Universidad de la Habana. Facultad de Matemá
 	operaciones, la cual se muestra en la figura \ref{fig:hierarchy}; de esta forma,
 	la adición de una operación no perjudica el buen funcionamiento del algoritmo.
 
-	\begin{figure}[htb]
+	\begin{figure}[htb] % @todo actualizar esto con los comandos aleatorios
 		\begin{center}
 			\includegraphics[scale=.43]{Graphics/hierarchy.eps}
 		\end{center}
@@ -386,38 +388,38 @@ Lic. Camila Pérez Mosquera, \emph{Universidad de la Habana. Facultad de Matemá
 	\ref{algor:IVNS} y utiliza la estrategia de \textbf{exploración exhaustiva}.
 
 	Esta estrategia consiste en explorar todos los vecinos de la vecindad y devolver el 
-	mejor de todos, para ello, se analizan todos los vecinos de una solución inicial con
-	respecto a un criterio $V$, y se devuelve el mejor. Luego se obtiene otro criterio 
-	de vecindad añadiendo a $V$ un CVS aleatorio, % @audit el criterio no es aleatorio
-	como se explicó anteriormente, y se 
-	repite el proceso. El algoritmo se detiene cuando, después de $ N $ iteraciones, no
-	encuentra una solución mejor.
+	mejor de todos, para ello, se analizan todos los vecinos de la solución actual con
+	respecto a todos los criterios $V$ compuestos por $n$ CVS, y se devuelve el mejor. La solución actual es inicialmente $S_0$ y se actualiza cada vez que se encuentra una soluci\'on mejor. $n$ es al comienzo igual a 1 y aumenta cuando no se encontr\'o una solución mejor o vuelve a ser 1, en caso contrario. Los criterios de vecindad son obtenidos mediante todas las combinaciones posibles de $n$ CVS, empleando para ello SAG. Se considera que una soluci\'on con costo $d_1$ es mejor que una soluci\'on con costo $d_2$ si $d_2 - d_1 > 10^{-3}$. La b\'usqueda de la mejor soluci\'on por todos los criterios de tamaño $n$ se detiene luego de $t_d$ milisegundos, mientras que todo el algoritmo se detiene luego de $ T $ milisegundos.
 
-	\begin{algorithm}[htb]\label{algor:IVNS} % @audit habla con Omar xq el algoritmo ta mal
-		\caption{Snake IVNS}
+	\begin{algorithm}[htb]
+		\caption{Snake IVNS} \label{algor:IVNS}
 	
 		\SetAlgoLined
 	
-		\KwData{$S_0, \;N$}
+		\KwData{$S_0, \;T, \; t_d$}
 		\KwResult{Mejor solución encontrada.}
 	
 		\LinesNumbered
 		\SetAlgoVlined
 	
+		iniciar un cron\'ometro para $ T $\;
 		$best \leftarrow S_0$\;
-		$ k \la 1 $\;
-		$ V \la \langle \rangle $\;
-		\While{$ k \leq N $}{
-			$v \la $ CVS aleatorio\; % @audit no es aleatorio
-			$V \gets V + v$\;
-			$x \la $ mejor de todos los vecinos de $best$ en $ V $\;
-			
-			\If{x es mejor que best}{
-				$x \la best$\;	
-				$k \la 1$
-			} \Else{
-				$k \la k + 1$\;
+		$ n \la 1 $\;
+		\While{no se haya agotado $ T $}{
+			reiniciar el cron\'ometro de $ t_d $\;
+			\ForEach{criterio $ V $ compuesto por $ n $ CVS}{
+				\If{se agot\'o $ T $ o $ t_d $}{
+					\textbf{break}\;
+				}
+				$x \la $ mejor vecino de $best$ en $ V $\;
+				\If{x es mejor que best}{
+					$x \la best$\;
+				}
 			}
+			\If{mejor\'o $ best $}{
+				$ n \la 0 $\;
+			}
+			$ n \la n + 1 $\;
 		}
 		\Return $best$\;
 		
@@ -436,174 +438,193 @@ Lic. Camila Pérez Mosquera, \emph{Universidad de la Habana. Facultad de Matemá
 	(Snake IVNS) y se compara con el mejor resultado obtenido por el IVNS presentado en 
 	\cite{Camila}, al resolver los problemas \textbf{A-n33-k5}, \textbf{A-n34-k5}, 
 	\textbf{A-n36-k5}, \textbf{A-n65-k9} y \textbf{A-n80-k10}, extraídos de \cite{neo}.
+
+	En la figura \ref{fig:results} se muestran los costos de la mejor soluci\'on reportada por \cite{benchmark}, \cite{Camila} y la encontrada por el algoritmo descrito en este art\'iculo. Snake IVNS fue ejecutado 30 veces en cada problema y en cada una de ellas se tom\'o $T = 30000, t_d = 5000$ y a $S_0$ como el resultado de repartir aleatoriamente a los clientes en rutas, satisfaciendo las condiciones del problema.
+
+	\begin{figure}[h!]%
+		\begin{center}
+			\begin{tabular}{|c|c|c|c|} \hline
+			Problema 	& \cite{benchmark} & \cite{Camila} & Snake \\ \hline
+			A-n33-k5 			&  	661		&  \textbf{640}		& 662 \\ \hline
+			A-n34-k5 & 778 & \textbf{737} & 789 \\ \hline
+			A-n36-k5 & \textbf{799} & 805 & 818 \\ \hline
+			A-n65-k9			& 	\textbf{1174}		& 1311		& 1253	\\ \hline
+			A-n80-k10 			& 	\textbf{1764}		&  	2069	& 1903	\\ \hline
+			\end{tabular}
+			\caption{Costo de la mejor soluci\'on. \label{fig:results}}
+		\end{center}
+	\end{figure}
 	
-	En las figuras \ref{fig:result33_5}, \ref{fig:result34_5}, \ref{fig:result36_5},
-	\ref{fig:result65_9} y \ref{fig:result80_10}, se puede apreciar la solución de menor
-	costo que Snake IVNS encontró después de ser exploradas un número de 
-	soluciones, así como el costo mínimo reportado en \cite{neo} y el costo 
-	mínimo obtenido por	IVNS para cada uno de los problemas trabajados.
-	
-	A continuación de las gráficas, se muestra, para cada problema, la distribución de 
-	rutas que logra el mejor resultado obtenido en cada algoritmo: Snake IVNS e IVNS. 
+	% En las figuras \ref{fig:result33_5}, \ref{fig:result34_5}, \ref{fig:result36_5},
+	% \ref{fig:result65_9} y \ref{fig:result80_10}, se puede apreciar la solución de menor
+	% costo que Snake IVNS encontró después de ser exploradas un número de 
+	% soluciones, así como el costo mínimo reportado en \cite{neo} y el costo 
+	% mínimo obtenido por	IVNS para cada uno de los problemas trabajados.
+
+	Se puede apreciar c\'omo \cite{Camila} es mejor que \cite{benchmark} y que Snake en A-n33-k5 y A-n34-k5. Aunque \cite{Camila} no supera a \cite{benchmark} en A-n36-k5, s\'i lo hace con respecto a Snake. Esto no sucede de igual manera en los \'ultimos dos problemas, donde Snake alcanza una soluci\'on mejor que \cite{Camila}, aunque no mejor que \cite{benchmark}.
+
+	Si tenemos en cuenta que cada corrida de Snake s\'olo dispuso de 30 segundos para alcanzar los resultados de la figura \ref{fig:results}, entonces se puede decir que el algoritmo tuvo un buen desempeño.
+
+	A continuación se muestran, para cada problema, la distribución de 
+	rutas que logra el mejor resultado obtenido en Snake IVNS. 
 	En cada ruta se encuentran los identificadores de los clientes ubicados	en esa ruta. 
-	Estos identificadores son números naturales del 1 al $n$, donde $n$ es la cantidad 
-	de clientes del problema ($n = 33\;$ para A-n33-k5, \\
+	Estos identificadores son números naturales del 1 al $n-1$, donde $n$ es la cantidad 
+	de clientes del problema m\'as el almac\'en ($n = 33\;$ para A-n33-k5,
 	$n = 34\;$ para A-n34-k5, $n = 36\;$ para A-n36-k5, etc).
 	
-	% @todo actualizar to estos resultados
-	% ----------------------- 33 5 ---------------------------------
-	\begin{figure}[htbp]
-		\centering
-		\includegraphics[scale=.55]{Graphics/result_A-n33-k5.pdf}
-		\caption{Desempeño del algoritmo en A-n33-k5.}\label{fig:result33_5}
-	\end{figure}
-	% --------------------------- 34 5 ----------------------------------
-	\begin{figure}[ht]
-		\centering
-		\includegraphics[scale=.55]{Graphics/result_A-n34-k5.pdf}
-		\caption{Desempeño del algoritmo en A-n34-k5.}\label{fig:result34_5}
-	\end{figure}
+	% % ----------------------- 33 5 ---------------------------------
+	% \begin{figure}[htbp]
+	% 	\centering
+	% 	\includegraphics[scale=.55]{Graphics/result_A-n33-k5.pdf}
+	% 	\caption{Desempeño del algoritmo en A-n33-k5.}\label{fig:result33_5}
+	% \end{figure}
+	% % --------------------------- 34 5 ----------------------------------
+	% \begin{figure}[ht]
+	% 	\centering
+	% 	\includegraphics[scale=.55]{Graphics/result_A-n34-k5.pdf}
+	% 	\caption{Desempeño del algoritmo en A-n34-k5.}\label{fig:result34_5}
+	% \end{figure}
 	
-	En las figuras \ref{fig:result33_5} y \ref{fig:result34_5} se aprecia cómo el 
-	algoritmo IVNS supera ampliamente a Snake IVNS y al mejor resultado presentado en 
-	\cite{neo}.
+	% En las figuras \ref{fig:result33_5} y \ref{fig:result34_5} se aprecia cómo el 
+	% algoritmo IVNS supera ampliamente a Snake IVNS y al mejor resultado presentado en 
+	% \cite{neo}.
 	
-	% --------------------------- 36 5 ----------------------------------
-	\begin{figure}[H]
-		\centering
-		\includegraphics[scale=.55]{Graphics/result_A-n36-k5.pdf}
-		\caption{Desempeño del algoritmo en A-n36-k5.}\label{fig:result36_5}
-	\end{figure}
+	% % --------------------------- 36 5 ----------------------------------
+	% \begin{figure}[H]
+	% 	\centering
+	% 	\includegraphics[scale=.55]{Graphics/result_A-n36-k5.pdf}
+	% 	\caption{Desempeño del algoritmo en A-n36-k5.}\label{fig:result36_5}
+	% \end{figure}
 	
-	% -------------------------- 65 9 ------------------------------
-	\begin{figure}[htbp]
-		\centering
-		\includegraphics[scale=.55]{Graphics/result_A-n65-k9.pdf}
-		\caption{Desempeño del algoritmo en A-n65-k9.}\label{fig:result65_9}
-	\end{figure}
+	% % -------------------------- 65 9 ------------------------------
+	% \begin{figure}[htbp]
+	% 	\centering
+	% 	\includegraphics[scale=.55]{Graphics/result_A-n65-k9.pdf}
+	% 	\caption{Desempeño del algoritmo en A-n65-k9.}\label{fig:result65_9}
+	% \end{figure}
 	
-	% ---------------------------- 80 10 ---------------------------------
-	\begin{figure}[H]
-		\centering
-		\includegraphics[scale=.55]{Graphics/result_A-n80-k10.pdf}
-		\caption{Desempeño del algoritmo en A-n80-k10.}\label{fig:result80_10}
-	\end{figure}
+	% % ---------------------------- 80 10 ---------------------------------
+	% \begin{figure}[H]
+	% 	\centering
+	% 	\includegraphics[scale=.55]{Graphics/result_A-n80-k10.pdf}
+	% 	\caption{Desempeño del algoritmo en A-n80-k10.}\label{fig:result80_10}
+	% \end{figure}
 	
-	En la figura \ref{fig:result36_5} se puede apreciar cómo IVNS no mejora el
-	mínimo presentado en \cite{neo}, pero sigue obteniendo un mejor resultado que 
-	Snake IVNS. Sin embargo, en las figuras \ref{fig:result65_9} y \ref{fig:result80_10},
-	Snake IVNS consigue ser mejor que IVNS. Todo parece indicar que el algoritmo presentado
-	en \cite{Camila} disminuye su rendimiento cuando aumenta la cantidad de clientes,
-	mientras que Snake IVNS se mantiene estable en su ejecución.
-	
-	\newpage
+	% En la figura \ref{fig:result36_5} se puede apreciar cómo IVNS no mejora el
+	% mínimo presentado en \cite{neo}, pero sigue obteniendo un mejor resultado que 
+	% Snake IVNS. Sin embargo, en las figuras \ref{fig:result65_9} y \ref{fig:result80_10},
+	% Snake IVNS consigue ser mejor que IVNS. Todo parece indicar que el algoritmo presentado
+	% en \cite{Camila} disminuye su rendimiento cuando aumenta la cantidad de clientes,
+	% mientras que Snake IVNS se mantiene estable en su ejecución.
 
 	\section*{Distribución de rutas para el problema A-n33-k5.}
 	\label{tab:result33_5}
 
-	\hspace{9pt} \textbf{Usando \blue{Snake IVNS}}\\				  
-	\textbf{Ruta 1:} 22, 28, 18, 23 			  \\
-	\textbf{Ruta 2:} 2, 20, 5, 26, 7, 8, 13, 32   \\
-	\textbf{Ruta 3:} 17, 9, 3, 16, 29, 15 		  \\
-	\textbf{Ruta 4:} 4, 12, 27, 25, 30, 10 		  \\
-	\textbf{Ruta 5:} 24, 6, 19, 14, 21, 1, 31, 11 \\
+	% \hspace{9pt} \textbf{Usando \blue{Snake IVNS}}\\				  
+	\hspace{-10pt}\textbf{Ruta 1:} 23, 18, 28, 22 \\
+	\textbf{Ruta 2:} 11, 31, 1, 21, 14, 19, 6, 24 \\
+	\textbf{Ruta 3:} 20, 4, 27, 25, 30, 10 \\
+	\textbf{Ruta 4:} 29, 16, 3, 9, 17, 15 \\
+	\textbf{Ruta 5:} 12, 5, 26, 7, 8, 13, 32, 2 \\
 
-	\textbf{Usando \red{IVNS}} 							\\
-	\textbf{Ruta 1:} 11, 18, 28, 23 					\\
-	\textbf{Ruta 2:} 2, 4, 12, 5, 27, 25, 30, 10, 17, 9 \\
-	\textbf{Ruta 3:} 32, 13, 8, 7, 26, 20 				\\
-	\textbf{Ruta 4:} 24, 6, 19, 14, 21, 1, 31 			\\
-	\textbf{Ruta 5:} 29, 3, 16, 15, 22 					
+	% \textbf{Usando \red{IVNS}} 							\\
+	% \textbf{Ruta 1:} 11, 18, 28, 23 					\\
+	% \textbf{Ruta 2:} 2, 4, 12, 5, 27, 25, 30, 10, 17, 9 \\
+	% \textbf{Ruta 3:} 32, 13, 8, 7, 26, 20 				\\
+	% \textbf{Ruta 4:} 24, 6, 19, 14, 21, 1, 31 			\\
+	% \textbf{Ruta 5:} 29, 3, 16, 15, 22 					
 	
 	\section*{Distribución de rutas para el problema A-n34-k5.}
 	\label{tab:result34_5}
 	
-	\hspace{9pt} \textbf{Usando \blue{Snake IVNS}} 	   \\
-	\textbf{Ruta 1:} 24, 30, 5, 26, 4 				   \\
-	\textbf{Ruta 2:} 6, 8, 1, 23, 27 				   \\
-	\textbf{Ruta 3:} 10, 13, 25, 17, 19, 11, 29 	   \\
-	\textbf{Ruta 4:} 33, 16, 22, 3, 12, 9, 2    	   \\
-	\textbf{Ruta 5:} 14, 7, 15, 31, 28, 32, 21, 18, 20 \\
+	% \hspace{9pt} \textbf{Usando \blue{Snake IVNS}}
+	\hspace{-10pt}\textbf{Ruta 1:} 24, 30, 5, 26, 4 \\
+	\textbf{Ruta 2:} 14, 8, 15, 6, 7, 10 \\
+	\textbf{Ruta 3:} 18, 21, 32, 28, 31, 25, 13 \\
+	\textbf{Ruta 4:} 20, 33, 16, 22, 3, 12, 9, 2 \\
+	\textbf{Ruta 5:} 17, 19, 11, 23, 27, 1, 29 \\
 
-	\textbf{Usando \red{IVNS}}						\\
-	\textbf{Ruta 1:} 18, 16, 22, 12, 3, 9, 2 		\\
-	\textbf{Ruta 2:} 20, 33, 4, 26 					\\
-	\textbf{Ruta 3:} 10, 13, 7, 6, 15, 8, 14		\\
-	\textbf{Ruta 4:} 21, 32, 28, 25, 31, 17, 19, 11 \\
-	\textbf{Ruta 5:} 5, 30, 24, 27, 23, 1, 29		
+	% \textbf{Usando \red{IVNS}}						\\
+	% \textbf{Ruta 1:} 18, 16, 22, 12, 3, 9, 2 		\\
+	% \textbf{Ruta 2:} 20, 33, 4, 26 					\\
+	% \textbf{Ruta 3:} 10, 13, 7, 6, 15, 8, 14		\\
+	% \textbf{Ruta 4:} 21, 32, 28, 25, 31, 17, 19, 11 \\
+	% \textbf{Ruta 5:} 5, 30, 24, 27, 23, 1, 29		
 	
 	\section*{Distribución de rutas para el problema A-n36-k5.}
 	\label{tab:result36_5}
 	
-	\hspace{9pt} \textbf{Usando \blue{Snake IVNS}}					\\
-	\textbf{Ruta 1:} 10, 7, 26	     								\\
-	\textbf{Ruta 2:} 5, 9, 14, 34, 20   			 	 			\\
-	\textbf{Ruta 3:} 11, 27, 18, 32, 22, 21, 24, 16	 				\\
-	\textbf{Ruta 4:} 25, 12, 31, 3, 6, 28	     	 	 			\\
-	\textbf{Ruta 5:} 1, 13, 17, 30, 29, 33, 19, 4, 23, 2, 35, 8, 15 \\
+	% \hspace{9pt} \textbf{Usando \blue{Snake IVNS}}
+	\hspace{-10pt}\textbf{Ruta 1:} 24, 21, 22, 32, 18, 30, 17, 13, 1, 16	\\
+	\textbf{Ruta 2:} 10, 7	\\
+	\textbf{Ruta 3:} 27, 33, 29, 31, 19, 4, 6, 3, 12	\\
+	\textbf{Ruta 4:} 15, 8, 35, 2, 23, 34, 14, 28	\\
+	\textbf{Ruta 5:} 26, 20, 5, 9, 25, 11 \\
 	
-	\textbf{Usando \red{IVNS}}						 \\
-	\textbf{Ruta 1:} 16, 1, 22, 32, 24, 27, 25, 11   \\
-	\textbf{Ruta 2:} 20, 14, 34, 6, 3, 4, 19, 31, 12 \\
-	\textbf{Ruta 3:} 5, 9, 28, 23, 2, 35, 8, 15, 7   \\
-	\textbf{Ruta 4:} 26, 10						     \\
-	\textbf{Ruta 5:} 21, 18, 33, 29, 30, 17, 13	     
+	% \textbf{Usando \red{IVNS}}						 \\
+	% \textbf{Ruta 1:} 16, 1, 22, 32, 24, 27, 25, 11   \\
+	% \textbf{Ruta 2:} 20, 14, 34, 6, 3, 4, 19, 31, 12 \\
+	% \textbf{Ruta 3:} 5, 9, 28, 23, 2, 35, 8, 15, 7   \\
+	% \textbf{Ruta 4:} 26, 10						     \\
+	% \textbf{Ruta 5:} 21, 18, 33, 29, 30, 17, 13	     
 	
 	\section*{Distribución de rutas para el problema A-n65-k9.}
 	\label{tab:result65_9}
 	
-	\hspace{9pt} \textbf{Usando \blue{Snake IVNS}}		 \\
-	\textbf{Ruta 1:} 60, 30, 37, 35, 36, 3 	     		 \\
-	\textbf{Ruta 2:} 56, 44, 59, 53   			 	     \\
-	\textbf{Ruta 3:} 17, 43		 		  				 \\
-	\textbf{Ruta 4:} 12, 13, 24, 52, 25, 21, 55	     	 \\
-	\textbf{Ruta 5:} 14, 22, 9, 31, 26, 47 				 \\
-	\textbf{Ruta 6:} 4, 50, 16, 41, 2, 38, 42, 61, 45, 5 \\
-	\textbf{Ruta 7:} 46, 64, 6, 34, 15, 27, 49			 \\
-	\textbf{Ruta 8:} 62, 28, 33, 1, 18, 29				 \\
-	\textbf{Ruta 9:} 19, 8, 10, 40, 58, 20, 32			 \\
-	\textbf{Ruta 10:} 51, 7, 63, 11, 54, 48, 39, 57, 23  \\ 
+	% \hspace{9pt} \textbf{Usando \blue{Snake IVNS}}		 \\
+	\hspace{-10pt}\textbf{Ruta 1:} 3, 36, 50, 16, 2, 41 \\
+	\textbf{Ruta 2:} 34, 31, 26, 6, 64, 46, 47 \\
+	\textbf{Ruta 3:} 62, 33, 1, 12, 13, 29 \\
+	\textbf{Ruta 4:} 28, 23, 57, 48, 54, 63, 11, 7 \\
+	\textbf{Ruta 5:} 21, 59, 44, 56, 25, 18 \\
+	\textbf{Ruta 6:} 43, 27, 14, 9, 22, 15 \\
+	\textbf{Ruta 7:} 55, 40, 10, 8, 52, 24, 19 \\
+	\textbf{Ruta 8:} 60, 30, 37, 35, 4, 49 \\
+	\textbf{Ruta 9:} 53, 32, 20, 58, 61, 42, 38, 45, 5 \\
+	\textbf{Ruta 10:} 17, 51, 39\\ 
 	
-	\textbf{Usando \red{IVNS}}						   \\
-	\textbf{Ruta 1:} 17, 15, 22, 9, 14, 27, 43		   \\
-	\textbf{Ruta 2:} 40, 10, 8, 52, 24, 19, 25		   \\
-	\textbf{Ruta 3:} 32, 20, 58, 61, 42, 45, 5		   \\
-	\textbf{Ruta 4:} 57, 48, 54, 11, 7				   \\
-	\textbf{Ruta 5:} 4, 3, 36, 35, 37				   \\
-	\textbf{Ruta 6:} 49, 30, 60, 50, 16, 2, 38, 41	   \\
-	\textbf{Ruta 7:} 55, 29, 18, 13, 12, 1, 33, 23, 28 \\
-	\textbf{Ruta 8:} 47, 34, 31, 26, 6, 46, 39, 51	   \\
-	\textbf{Ruta 9:} 53, 59, 56, 44, 21			       \\
-	\textbf{Ruta 10:} 62, 63, 64					   
+	% \textbf{Usando \red{IVNS}}						   \\
+	% \textbf{Ruta 1:} 17, 15, 22, 9, 14, 27, 43		   \\
+	% \textbf{Ruta 2:} 40, 10, 8, 52, 24, 19, 25		   \\
+	% \textbf{Ruta 3:} 32, 20, 58, 61, 42, 45, 5		   \\
+	% \textbf{Ruta 4:} 57, 48, 54, 11, 7				   \\
+	% \textbf{Ruta 5:} 4, 3, 36, 35, 37				   \\
+	% \textbf{Ruta 6:} 49, 30, 60, 50, 16, 2, 38, 41	   \\
+	% \textbf{Ruta 7:} 55, 29, 18, 13, 12, 1, 33, 23, 28 \\
+	% \textbf{Ruta 8:} 47, 34, 31, 26, 6, 46, 39, 51	   \\
+	% \textbf{Ruta 9:} 53, 59, 56, 44, 21			       \\
+	% \textbf{Ruta 10:} 62, 63, 64					   
 	
 	\section*{Distribución de rutas para el problema A-n80-k10.}
 	\label{tab:result80_10}
 	
-	\hspace{9pt} \textbf{Usando \blue{Snake IVNS}}											\\
-	\textbf{Ruta 1:} 71, 28, 2, 37, 6 	     		 										\\
-	\textbf{Ruta 2:} 1, 63, 7   			 	     										\\
-	\textbf{Ruta 3:} 60, 20, 57, 61, 8, 34, 11		 		  				 				\\
-	\textbf{Ruta 4:} 23, 24, 30, 59, 27, 17, 39	     	 									\\
-	\textbf{Ruta 5:} 49, 73, 36, 3, 42 				 										\\
-	\textbf{Ruta 6:} 38, 76, 45, 22, 4, 32 													\\
-	\textbf{Ruta 7:} 66, 70, 9, 15, 47, 19, 25, 41, 46, 64, 51 								\\
-	\textbf{Ruta 8:} 62, 12, 44, 5, 29, 74, 77, 53, 67				 						\\
-	\textbf{Ruta 9:} 13, 31, 78, 68, 43, 16, 75, 26, 65, 35, 69, 56, 55, 33, 54, 72, 50, 58 \\
-	\textbf{Ruta 10:} 52, 79, 18, 48, 14, 10, 21, 40  										\\
+	% \hspace{9pt} \textbf{Usando \blue{Snake IVNS}}											\\
+	\hspace{-10pt}\textbf{Ruta 1:} 10, 71, 52, 2, 37, 8, 6	\\
+	\textbf{Ruta 2:} 53, 76, 50, 45, 22, 4, 32	\\
+	\textbf{Ruta 3:} 17, 20, 75, 19, 57, 61	\\
+	\textbf{Ruta 4:} 72, 54, 9, 55, 41, 25, 46, 31, 74	\\
+	\textbf{Ruta 5:} 28, 79, 18, 48, 14, 21	\\
+	\textbf{Ruta 6:} 30, 78, 68, 16, 43, 26, 65, 35, 69, 56, 47, 15, 33, 64, 60, 39, 77	\\
+	\textbf{Ruta 7:} 12, 44, 5, 23, 62, 7	\\
+	\textbf{Ruta 8:} 42, 51, 3, 1, 40	\\
+	\textbf{Ruta 9:} 49, 38, 58, 70, 66, 67, 36, 73 \\
+	\textbf{Ruta 10:} 63, 11, 34, 24, 59, 27, 29, 13	\\
 	
-	\textbf{Usando \red{IVNS}}								\\
-	\textbf{Ruta 1:} 49, 38, 32, 4, 22, 45, 50, 72, 76, 73	\\
-	\textbf{Ruta 2:} 53, 39, 60, 3, 77, 42		   			\\
-	\textbf{Ruta 3:} 7, 21, 40		   						\\
-	\textbf{Ruta 4:} 1, 63, 11, 52, 28, 18, 48, 14, 71, 10	\\
-	\textbf{Ruta 5:} 64, 15, 56, 47, 20, 31, 17, 74		    \\
-	\textbf{Ruta 6:} 62, 34, 2, 37, 8, 30, 5	   			\\
-	\textbf{Ruta 7:} 12, 44, 6, 24, 23, 13 					\\
-	\textbf{Ruta 8:} 78, 68, 43, 16, 61, 57, 75, 27, 29	    \\
-	\textbf{Ruta 9:} 36, 67, 66, 58, 33, 41, 25, 46, 51		\\
-	\textbf{Ruta 10:} 59, 19, 26, 65, 35, 69, 55, 9, 54, 70	\\
-	\textbf{Ruta 11:} 79									\\
+	% \textbf{Usando \red{IVNS}}								\\
+	% \textbf{Ruta 1:} 49, 38, 32, 4, 22, 45, 50, 72, 76, 73	\\
+	% \textbf{Ruta 2:} 53, 39, 60, 3, 77, 42		   			\\
+	% \textbf{Ruta 3:} 7, 21, 40		   						\\
+	% \textbf{Ruta 4:} 1, 63, 11, 52, 28, 18, 48, 14, 71, 10	\\
+	% \textbf{Ruta 5:} 64, 15, 56, 47, 20, 31, 17, 74		    \\
+	% \textbf{Ruta 6:} 62, 34, 2, 37, 8, 30, 5	   			\\
+	% \textbf{Ruta 7:} 12, 44, 6, 24, 23, 13 					\\
+	% \textbf{Ruta 8:} 78, 68, 43, 16, 61, 57, 75, 27, 29	    \\
+	% \textbf{Ruta 9:} 36, 67, 66, 58, 33, 41, 25, 46, 51		\\
+	% \textbf{Ruta 10:} 59, 19, 26, 65, 35, 69, 55, 9, 54, 70	\\
+	% \textbf{Ruta 11:} 79									\\
 	
+	% @remind comparar esto d las rutas (si las pones junto con las d cami)
+
 	En esta sección se pudo observar el desempeño de los algoritmos de tipo IVNS y
 	los buenos resultados que se pueden alcanzar al considerar infinitos criterios
 	de vecindad. En las secciones siguientes se presentan las conclusiones del trabajo
@@ -690,6 +711,10 @@ Lic. Camila Pérez Mosquera, \emph{Universidad de la Habana. Facultad de Matemá
 	para vrp.} \\
 	URL: \href{http://neo.lcc.uma.es/vrp/vrpinstances/capacitated-vrp-instances/}
 	{http://neo.lcc.uma.es/vrp/vrpinstances/capacitated-vrp-instances/}, 1 2013.
+
+	\bibitem{benchmark} Surana, Pratik, \textit{Benchmarking Optimization Algorithms for Capacitated Vehicle Routing Problems} (2019). Master's Projects. 719.
+	DOI: \href{https://doi.org/10.31979/etd.cjjg-7wvf}{https://doi.org/10.31979/etd.cjjg-7wvf}.
+	\href{https://scholarworks.sjsu.edu/etd\_projects/719}{https://scholarworks.sjsu.edu/etd\_projects/719}
 %-----------------------------------------------------------------------------------
 \end{thebibliography}
 

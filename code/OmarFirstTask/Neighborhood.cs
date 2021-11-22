@@ -74,7 +74,7 @@ namespace OmarFirstTask
             foreach (var neigh in GetNeighbors((DistributionNetwork)best.Clone()))
             {
                 combinaciones_analizadas++;
-                if (neigh.TotalDistance < best.TotalDistance)
+                if (IsBetter(neigh.TotalDistance, best.TotalDistance))
                 {
                     best = (DistributionNetwork)neigh.Clone(); // needed the clone?
 
@@ -86,6 +86,16 @@ namespace OmarFirstTask
             }
             best.LeaveEmptyVehicles(1);
             return best;
+        }
+
+        /// <summary>
+        /// Determina si el costo <paramref name="d1"/> es mejor que <paramref name="d2"/>.
+        /// </summary>
+        /// <param name="d1"></param>
+        /// <param name="d2"></param>
+        /// <returns></returns>
+        private bool IsBetter(double d1, double d2) {
+            return d2 - d1 > 1e-3;
         }
     }
 }

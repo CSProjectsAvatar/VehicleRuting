@@ -41,7 +41,7 @@ namespace Cli {
                     runner.FileName = args[0];
 
                     var runOut = new RunOutcome();
-                    /// Mio @audit cargando una solucion
+                    /// Mio @note cargando una solucion
                     // runner.Run(continueFromFile: true);
 
                     Console.CancelKeyPress += delegate {
